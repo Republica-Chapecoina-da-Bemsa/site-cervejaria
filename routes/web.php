@@ -14,3 +14,12 @@ Route::prefix('clients')->group(function () {
     Route::delete('/delete/{client}/', [ClientController::class, 'destroy'])->name('clients.destroy');
     Route::get('/search', [ClientController::class, 'search'])->name('clients.search');
 });
+use App\Http\Controllers\EventController;
+
+Route::get('/event', [EventController::class, 'index'])->name('event.index');
+Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
+Route::post('/event/store', [EventController::class, 'store'])->name('event.store');
+Route::delete('event/{id}', [EventController::class, 'destroy'])->name('event.destroy');
+Route::get('event/{id}', [EventController::class, 'edit'])->name('event.edit');
+Route::put('event/update/{id}', [EventController::class, 'update'])->name('event.update');
+Route::post('event/search', [EventController::class, 'search'])->name('event.search');
