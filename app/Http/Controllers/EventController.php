@@ -7,12 +7,21 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private function validateEvent(Request $request)
+    {
+        return $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'location' => 'required|string|max:20',
+            'date' => 'required|date|max:255',
+        ]);
+    }
     public function index()
     {
-        //
+        $events = Event::all();
+        return view('events.list', [
+            'events' => $events,
+        ]);
     }
 
     /**
@@ -20,7 +29,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('events.form');
     }
 
     /**
@@ -28,7 +37,11 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validateEvent($request);
+        $data = $request->all();
+        Event::create($data);
+
+        return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
 
     /**
@@ -44,7 +57,9 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return view('events.form', [
+            'event' => $event,
+        ]);
     }
 
     /**
@@ -52,7 +67,11 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $this->validateEvent($request);
+        $data = $request->all();
+        $event->update($data);
+
+        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
@@ -60,6 +79,21 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+    }
+    public function search(Request $request)
+    {
+        $value = $request->input('value');
+        $column = $request->input('column');
+
+        $events = Event::where($column, 'like', "%{$value}%")
+
+            ->get();
+
+        return view('events.list', [
+            'events' => $events,
+
+        ]);
     }
 }
