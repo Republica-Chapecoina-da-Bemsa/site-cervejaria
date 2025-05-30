@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\StyleController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -24,4 +25,14 @@ Route::prefix('events')->group(function () {
     Route::put('/edit/{event}/update', [EventController::class, 'update'])->name('events.update');
     Route::delete('/delete/{event}/', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('/search', [EventController::class, 'search'])->name('events.search');
+});
+
+Route::prefix('styles')->group(function () {
+    Route::get('/', [StyleController::class, 'index'])->name('styles.index');
+    Route::get('/create', [StyleController::class, 'create'])->name('styles.create');
+    Route::post('/create/store', [StyleController::class, 'store'])->name('styles.store');
+    Route::get('/edit/{style}', [StyleController::class, 'edit'])->name('styles.edit');
+    Route::put('/edit/{style}/update', [StyleController::class, 'update'])->name('styles.update');
+    Route::delete('/delete/{style}/', [StyleController::class, 'destroy'])->name('styles.destroy');
+    Route::get('/search', [StyleController::class, 'search'])->name('styles.search');
 });
