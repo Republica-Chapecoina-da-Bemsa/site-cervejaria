@@ -4,16 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private function validateEvent(Request $request)
+    {
+        return $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'location' => 'required|string|max:20',
+            'date' => 'required|date|max:255',
+        ]);
+    }
     public function index()
     {
         $events = Event::all();
+        return view('events.list', [
+            'events' => $events,
+        ]);
     }
 
     /**
@@ -21,7 +29,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('events.create');
+        return view('events.form');
     }
 
     /**
@@ -29,23 +37,17 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'location' => 'required|string|max:255',
-            'date' => 'required|date',
-        ]);
-
+        $this->validateEvent($request);
         $data = $request->all();
-
         Event::create($data);
-        return redirect('event');
+
+        return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Event $event)
     {
         //
     }
@@ -53,68 +55,45 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Event $event)
     {
-        $event = Event::find($id);
-        if (!$event) {
-            return redirect("event")->with('error', 'Event not found');
-        }
-        return view('event.form', ['baker' => $event]);
+        return view('events.form', [
+            'event' => $event,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Event $event)
     {
-        $event = Event::find($id);
-        if (!$event) {
-            return redirect("event")->with('error', 'Event not found');
-        }
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'location' => 'required|string|max:255',
-            'date' => 'required|date',
-        ]);
-
-        $data = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'location' => $request->location,
-            'date' => $request->date,
-        ];
-
+        $this->validateEvent($request);
+        $data = $request->all();
         $event->update($data);
-        return redirect('event');
+
+        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Event $event)
     {
-        $event = Event::find($id);
-        if (!$event) {
-            return redirect('event')->with('error', 'Café não encontrado');
-        }
         $event->delete();
-        return redirect('event');
+        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
     }
     public function search(Request $request)
     {
-        if (!empty($request->value)) {
-            $value = $request->value;
-            $type = $request->type;
+        $value = $request->input('value');
+        $column = $request->input('column');
 
-            $data = Event::where($type, 'like', "%$value%")->get();
-            if (empty($data)) {
-                return view("event.list", ['data' => $data])->with('error', 'Nenhum resultado encontrado.');
-            }
-        } else {
-            $data = Event::all();
-        }
+        $events = Event::where($column, 'like', "%{$value}%")
 
-        return view("event.list", ['data' => $data]);
+            ->get();
+
+        return view('events.list', [
+            'events' => $events,
+
+        ]);
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EventController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -14,12 +15,13 @@ Route::prefix('clients')->group(function () {
     Route::delete('/delete/{client}/', [ClientController::class, 'destroy'])->name('clients.destroy');
     Route::get('/search', [ClientController::class, 'search'])->name('clients.search');
 });
-use App\Http\Controllers\EventController;
 
-Route::get('/event', [EventController::class, 'index'])->name('event.index');
-Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
-Route::post('/event/store', [EventController::class, 'store'])->name('event.store');
-Route::delete('event/{id}', [EventController::class, 'destroy'])->name('event.destroy');
-Route::get('event/{id}', [EventController::class, 'edit'])->name('event.edit');
-Route::put('event/update/{id}', [EventController::class, 'update'])->name('event.update');
-Route::post('event/search', [EventController::class, 'search'])->name('event.search');
+Route::prefix('events')->group(function () {
+    Route::get('/', [EventController::class, 'index'])->name('events.index');
+    Route::get('/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/create/store', [EventController::class, 'store'])->name('events.store');
+    Route::get('/edit/{event}', [EventController::class, 'edit'])->name('events.edit');
+    Route::put('/edit/{event}/update', [EventController::class, 'update'])->name('events.update');
+    Route::delete('/delete/{event}/', [EventController::class, 'destroy'])->name('events.destroy');
+    Route::get('/search', [EventController::class, 'search'])->name('events.search');
+});

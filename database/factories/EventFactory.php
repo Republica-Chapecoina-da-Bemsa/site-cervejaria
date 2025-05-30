@@ -2,9 +2,6 @@
 
 namespace Database\Factories;
 
-use Ramsey\Uuid\Uuid;
-
-use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,12 +14,10 @@ class EventFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected $model = Event::class;
 
     public function definition(): array
     {
         return [
-            'id' => (string) Uuid::uuid4(),
             'name' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph(3),
             'location' => $this->faker->address(),

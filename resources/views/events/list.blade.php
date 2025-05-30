@@ -1,16 +1,15 @@
 <div class="container">
-    <h1>Clients List</h1>
-    <a href="{{ route("clients.create")}}">New</a>
-    <form action="{{route("clients.search")}}" method="get">
+    <h1>events List</h1>
+    <a href="{{ route("events.create")}}">New</a>
+    <form action="{{route("events.search")}}" method="get">
         <div>
             <label for="value">Search:</label>
             <input type="text" name="value" id="value">
         </div>
         <div>
             <select name="column" id="column">
-                <option value="email">Email</option>
                 <option value="name">Name</option>
-                <option value="address">Address</option>
+                <option value="location">Location</option>
             </select>
         </div>
         <button type="submit">Buscar</button>
@@ -20,27 +19,26 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Actions</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($clients as $client)
+            @foreach($events as $event)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $client->name }}</td>
-                <td>{{ $client->email }}</td>
-                <td>{{ $client->phone }}</td>
-                <td>{{ $client->address }}</td>
+                <td>{{ $event->name }}</td>
+                <td>{{ $event->description }}</td>
+                <td>{{ $event->location }}</td>
+                <td>{{ $event->date }}</td>
                 <td>
-                    <form action="{{route("clients.destroy", $client)}}" method="post">
+                    <form action="{{route("events.destroy", $event)}}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit">Deletar</button>
                     </form>
-                    <a href="{{route("clients.edit", $client)}}">Editar</a>
+                    <a href="{{route("events.edit", $event)}}">Editar</a>
                 </td>
             </tr>
             @endforeach
