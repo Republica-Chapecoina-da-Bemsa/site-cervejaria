@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StyleController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -35,4 +37,14 @@ Route::prefix('styles')->group(function () {
     Route::put('/edit/{style}/update', [StyleController::class, 'update'])->name('styles.update');
     Route::delete('/delete/{style}/', [StyleController::class, 'destroy'])->name('styles.destroy');
     Route::get('/search', [StyleController::class, 'search'])->name('styles.search');
+});
+
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/create/store', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/edit/{product}/update', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/delete/{product}/', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::get('/search', [ProductController::class, 'search'])->name('products.search');
 });
