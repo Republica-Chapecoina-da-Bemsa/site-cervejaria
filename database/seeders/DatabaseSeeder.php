@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             EventSeeder::class,
             StyleSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 
