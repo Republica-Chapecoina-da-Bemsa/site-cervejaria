@@ -20,6 +20,9 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>products</th>
+                <th>Actions</th>
+
             </tr>
         </thead>
         <tbody>
@@ -28,6 +31,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $style->name }}</td>
                 <td>{{ $style->description }}</td>
+                <td><a href="{{route("styles.products.index",$style->id)}}">ver</a></td>
                 <td>
                     <form action="{{route("styles.destroy", $style)}}" method="post">
                         @csrf

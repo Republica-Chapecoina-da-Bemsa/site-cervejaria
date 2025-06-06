@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StyleController;
+use App\Http\Controllers\StyleProductController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,6 +38,15 @@ Route::prefix('styles')->group(function () {
     Route::put('/edit/{style}/update', [StyleController::class, 'update'])->name('styles.update');
     Route::delete('/delete/{style}/', [StyleController::class, 'destroy'])->name('styles.destroy');
     Route::get('/search', [StyleController::class, 'search'])->name('styles.search');
+    Route::prefix('{style}/products')->group(function () {
+        Route::get('/', [StyleProductController::class, 'index'])->name('styles.products.index');
+        Route::get('/create', [StyleProductController::class, 'create'])->name('styles.products.create');
+        Route::post('/create/store', [StyleProductController::class, 'store'])->name('styles.products.store');
+        Route::get('/edit/{product}', [StyleProductController::class, 'edit'])->name('styles.products.edit');
+        Route::put('/edit/{product}/update', [StyleProductController::class, 'update'])->name('styles.products.update');
+        Route::delete('/delete/{product}/', [StyleProductController::class, 'destroy'])->name('styles.products.destroy');
+        Route::get('/search', [StyleProductController::class, 'search'])->name('styles.products.search');
+    });
 });
 
 Route::prefix('products')->group(function () {
