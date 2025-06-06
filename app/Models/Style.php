@@ -19,6 +19,10 @@ class Style extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
     protected static function booted()
     {
         static::creating(function ($style) {

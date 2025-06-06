@@ -1,7 +1,9 @@
-<form action="{{ isset($product) ? route('products.update', $product->id) : route('products.store') }}" method="POST" enctype="multipart/form-data">
+<form
+    action="{{ isset($product) ? route('styles.products.update', [$style->id, $product->id]) : route('styles.products.store', [$style->id]) }}"
+    method="POST" enctype="multipart/form-data">
     @csrf
     @if(isset($product))
-    @method('PUT')
+        @method('PUT')
     @endif
 
     <div>
@@ -25,13 +27,7 @@
             <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
         @endif
     </div>
-    <select name="style_id" id="">
-        @foreach ($styles as $style)
-            <option value="{{ $style->id }}" {{ (isset($product->style) && $product->style->id == $style->id) ? 'selected' : '' }}>
-                {{ $style->name }}
-            </option>
-        @endforeach
-    </select>
+    <input type="hidden" name="style_id" value="{{ $style->id }}">
     <button type="submit">
         {{ isset($product) ? 'Update product' : 'Create product' }}
     </button>
