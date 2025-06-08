@@ -15,6 +15,7 @@ class Event extends Model
         'description',
         'location',
         'date',
+        'image',
     ];
     public $incrementing = false;
     protected $keyType = 'string';

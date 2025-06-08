@@ -1,4 +1,5 @@
-<form action="{{ isset($event) ? route('events.update', $event->id) : route('events.store') }}" method="POST">
+<form action="{{ isset($event) ? route('events.update', $event->id) : route('events.store') }}" method="POST"
+      enctype="multipart/form-data">
     @csrf
     @if(isset($event))
     @method('PUT')
@@ -23,6 +24,12 @@
         <label for="date">Date:</label>
         <input type="datetime-local" name="date" id="date" value="{{ old('date', $event->date ?? '') }}" required>
     </div>
+    <div>
+        <label for="image">Image:</label>
+        <input type="file" name="image" id="image">
+        @if(isset($event) && $event->image)
+            <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->name }}" width="100">
+        @endif
     <button type="submit">
         {{ isset($event) ? 'Update event' : 'Create event' }}
     </button>

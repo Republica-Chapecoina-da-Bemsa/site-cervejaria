@@ -22,6 +22,8 @@
                 <th>Description</th>
                 <th>Location</th>
                 <th>Date</th>
+                <th>Image</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +34,13 @@
                 <td>{{ $event->description }}</td>
                 <td>{{ $event->location }}</td>
                 <td>{{ $event->date }}</td>
+                <td>
+                     @if($event->image)
+                            <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->name }}" width="100">
+                        @else
+                            No image
+                        @endif
+                </td>
                 <td>
                     <form action="{{route("events.destroy", $event)}}" method="post">
                         @csrf
