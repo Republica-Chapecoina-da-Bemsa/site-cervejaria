@@ -14,6 +14,7 @@ class EventController extends Controller
             'description' => 'required|string|max:255',
             'location' => 'required|string|max:20',
             'date' => 'required|date|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
     }
     public function index()
@@ -39,6 +40,11 @@ class EventController extends Controller
     {
         $this->validateEvent($request);
         $data = $request->all();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('events/images', 'public');
+            $data['image'] = $imagePath;
+        }
         Event::create($data);
 
         return redirect()->route('events.index')->with('success', 'Event created successfully.');
@@ -69,6 +75,11 @@ class EventController extends Controller
     {
         $this->validateEvent($request);
         $data = $request->all();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('events/images', 'public');
+            $data['image'] = $imagePath;
+        }
         $event->update($data);
 
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
@@ -79,6 +90,12 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        if ($event->image) {
+            $imagePath = public_path('storage/' . $event->image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath); // Delete the image file
+            }
+        }
         $event->delete();
         return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
     }
