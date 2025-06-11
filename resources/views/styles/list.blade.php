@@ -1,28 +1,32 @@
+@extends('base')
+
 <div class="container">
-    <h1>styles List</h1>
-    <a href="{{ route("styles.create")}}">New</a>
-    <form action="{{route("styles.search")}}" method="get">
-        <div>
-            <label for="value">Search:</label>
-            <input type="text" name="value" id="value">
-        </div>
-        <div>
-            <select name="column" id="column">
-                <option value="name">Name</option>
-                <option value="description">Description</option>
+    <h1 class="mt-4">Lista de Estilos</h1>
+
+    <div class="container mb-2">
+        <form action="{{ route('styles.search') }}" method="get" class="d-flex align-items-center gap-1">
+            <div class="input-group">
+                <input type="text" name="value" id="value" class="form-control" placeholder="Buscar">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+
+            <select name="column" id="column" class="form-select" style="width: 200px;">
+                <option value="name">Nome</option>
+                <option value="description">Descrição</option>
             </select>
-        </div>
-        <button type="submit">Buscar</button>
-    </form>
-    <table class="table table-bordered">
+
+            <a href="{{ route('styles.create') }}" class="btn btn-success">Novo</a>
+        </form>
+    </div>
+
+    <table class="table table-striped table-sm">
         <thead>
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>products</th>
-                <th>Actions</th>
-
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Produtos</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -31,14 +35,14 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $style->name }}</td>
                 <td>{{ $style->description }}</td>
-                <td><a href="{{route("styles.products.index",$style->id)}}">ver</a></td>
+                <td><a href="{{ route('styles.products.index', $style->id) }}" class="btn btn-outline-dark">Ver</a></td>
                 <td>
-                    <form action="{{route("styles.destroy", $style)}}" method="post">
+                    <form action="{{ route('styles.destroy', $style) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit">Deletar</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
                     </form>
-                    <a href="{{route("styles.edit", $style)}}">Editar</a>
+                    <a href="{{ route('styles.edit', $style) }}" class="btn btn-warning">Editar</a>
                 </td>
             </tr>
             @endforeach
