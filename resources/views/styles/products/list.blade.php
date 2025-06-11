@@ -1,28 +1,34 @@
+@extends('base')
+
 <div class="container">
-    <h1>{{$style->name}} List</h1>
-    <a href="{{ route("styles.products.create",$style->id)}}">New</a>
-    <form action="{{route("styles.products.search",$style->id)}}" method="get">
-        <div>
-            <label for="value">Search:</label>
-            <input type="text" name="value" id="value">
-        </div>
-        <div>
-            <select name="column" id="column">
-                <option value="name">Name</option>
-                <option value="description">Description</option>
+    <h1 class="mt-4">{{ $style->name }} - Lista de Produtos</h1>
+
+    <div class="container mb-2">
+        <form action="{{ route('styles.products.search', $style->id) }}" method="get" class="d-flex align-items-center gap-1">
+            <div class="input-group">
+                <input type="text" name="value" id="value" class="form-control" placeholder="Buscar">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+
+            <select name="column" id="column" class="form-select" style="width: 200px;">
+                <option value="name">Nome</option>
+                <option value="description">Descrição</option>
             </select>
-        </div>
-        <button type="submit">Buscar</button>
-    </form>
-    <table class="table table-bordered">
+
+            <a href="{{ route('styles.products.create', $style->id) }}" class="btn btn-success">Novo</a>
+        </form>
+    </div>
+
+    <table class="table table-striped table-sm">
         <thead>
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Style</th>
-                <th>Image</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Estilo</th>
+                <th>Imagem</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -37,15 +43,16 @@
                         @if($product->image)
                             <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
                         @else
-                            No image
+                            Sem imagem
                         @endif
+                    </td>
                     <td>
-                        <form action="{{route("styles.products.destroy", [$style->id, $product->id])}}" method="post">
+                        <form action="{{ route('styles.products.destroy', [$style->id, $product->id]) }}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Deletar</button>
+                            <button type="submit" class="btn btn-danger">Deletar</button>
                         </form>
-                        <a href="{{route("styles.products.edit", [$style->id, $product->id])}}">Editar</a>
+                        <a href="{{ route('styles.products.edit', [$style->id, $product->id]) }}" class="btn btn-warning">Editar</a>
                     </td>
                 </tr>
             @endforeach
