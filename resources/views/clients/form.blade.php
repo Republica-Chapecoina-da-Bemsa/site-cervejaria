@@ -1,12 +1,14 @@
-@extends('base')
+@extends('baseadm')
+@section('titulo', isset($style) ? 'Editar Estilo' : 'Criar Estilo')
 
+@section('conteudo')
 <div class="container">
     <h1 class="mt-4">{{ isset($client) ? 'Editar Cliente' : 'Criar Cliente' }}</h1>
 
     <form action="{{ isset($client) ? route('clients.update', $client->id) : route('clients.store') }}" method="POST">
         @csrf
         @if(isset($client))
-            @method('PUT')
+        @method('PUT')
         @endif
 
         <div class="mb-3">
@@ -34,3 +36,4 @@
         </button>
     </form>
 </div>
+@endsection

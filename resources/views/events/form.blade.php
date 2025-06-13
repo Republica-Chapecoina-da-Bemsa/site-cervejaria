@@ -1,12 +1,14 @@
-@extends('base')
+@extends('baseadm')
+@section('titulo', isset($style) ? 'Editar Estilo' : 'Criar Estilo')
 
+@section('conteudo')
 <div class="container">
     <h1 class="mt-4">{{ isset($event) ? 'Editar Evento' : 'Criar Evento' }}</h1>
 
     <form action="{{ isset($event) ? route('events.update', $event->id) : route('events.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if(isset($event))
-            @method('PUT')
+        @method('PUT')
         @endif
 
         <div class="mb-3">
@@ -33,9 +35,9 @@
             <label for="image" class="form-label">Imagem:</label>
             <input type="file" name="image" id="image" class="form-control">
             @if(isset($event) && $event->image)
-                <div class="mt-2">
-                    <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->name }}" width="100">
-                </div>
+            <div class="mt-2">
+                <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->name }}" width="100">
+            </div>
             @endif
         </div>
 
@@ -44,3 +46,4 @@
         </button>
     </form>
 </div>
+@endsection

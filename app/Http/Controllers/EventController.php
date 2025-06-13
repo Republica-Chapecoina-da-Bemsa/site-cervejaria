@@ -12,7 +12,7 @@ class EventController extends Controller
         return $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'location' => 'required|string|max:20',
+            'location' => 'required|string|max:255',
             'date' => 'required|date|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);

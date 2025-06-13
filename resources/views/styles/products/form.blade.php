@@ -1,5 +1,7 @@
-@extends('base')
+@extends('baseadm')
+@section('titulo', isset($style) ? 'Editar Estilo' : 'Criar Estilo')
 
+@section('conteudo')
 <div class="container">
     <h1 class="mt-4">{{ isset($product) ? 'Editar Produto' : 'Criar Produto' }}</h1>
 
@@ -8,7 +10,7 @@
         method="POST" enctype="multipart/form-data">
         @csrf
         @if(isset($product))
-            @method('PUT')
+        @method('PUT')
         @endif
 
         <div class="mb-3">
@@ -30,9 +32,9 @@
             <label for="image" class="form-label">Imagem:</label>
             <input type="file" name="image" id="image" class="form-control">
             @if(isset($product) && $product->image)
-                <div class="mt-2">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
-                </div>
+            <div class="mt-2">
+                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
+            </div>
             @endif
         </div>
 
@@ -43,3 +45,4 @@
         </button>
     </form>
 </div>
+@endsection

@@ -6,10 +6,31 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StyleController;
 use App\Http\Controllers\StyleProductController;
+use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\ClientStyleController;
+use App\Http\Controllers\ClientProductController;
+use App\Http\Controllers\CartController;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomePageController::class, 'index'])->name('home');
+Route::get('/estilos', [ClientStyleController::class, 'index'])->name('styles.list');
+Route::get('/estilos/{style}', [ClientStyleController::class, 'show'])->name('styles.show');
+
+Route::get('/produtos', [ClientProductController::class, 'index'])->name('products.list');
+Route::get('/produtos/{products}', [ClientProductController::class, 'show'])->name('products.show');
+
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
+
+Route::get('/admin', function () {
+    return view('index');
+})->name('admin.index');
+
 Route::prefix('clients')->group(function () {
     Route::get('/', [ClientController::class, 'index'])->name('clients.index');
     Route::get('/create', [ClientController::class, 'create'])->name('clients.create');

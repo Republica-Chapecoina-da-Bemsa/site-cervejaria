@@ -1,5 +1,7 @@
-@extends('base')
+@extends('baseadm')
+@section('titulo', 'Lista de Estilos')
 
+@section('conteudo')
 <div class="container">
     <h1 class="mt-4">Lista de Estilos</h1>
 
@@ -36,11 +38,13 @@
                 <td>{{ $style->name }}</td>
                 <td>{{ $style->description }}</td>
                 <td><a href="{{ route('styles.products.index', $style->id) }}" class="btn btn-outline-dark">Ver</a></td>
-                <td>
-                    <form action="{{ route('styles.destroy', $style) }}" method="post">
+                <td class="flex">
+                    <form action="{{ route('styles.destroy', $style) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Deletar</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja deletar este estilo?')">
+                            Deletar
+                        </button>
                     </form>
                     <a href="{{ route('styles.edit', $style) }}" class="btn btn-warning">Editar</a>
                 </td>
@@ -49,3 +53,4 @@
         </tbody>
     </table>
 </div>
+@endsection

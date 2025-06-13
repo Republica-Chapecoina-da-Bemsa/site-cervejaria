@@ -1,5 +1,7 @@
-@extends ('base')
+@extends ('baseadm')
+@section('titulo', 'Lista de Eventos')
 
+@section('conteudo')
 <div class="container">
     <h1 class="mt-4">Lista de Eventos</h1>
 
@@ -33,29 +35,33 @@
         </thead>
         <tbody>
             @foreach($events as $event)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $event->name }}</td>
-                    <td>{{ $event->description }}</td>
-                    <td>{{ $event->location }}</td>
-                    <td>{{ $event->date }}</td>
-                    <td>
-                        @if($event->image)
-                            <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->name }}" width="100">
-                        @else
-                            Sem imagem
-                        @endif
-                    </td>
-                    <td>
-                        <form action="{{ route('events.destroy', $event) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Deletar</button>
-                        </form>
-                        <a href="{{ route('events.edit', $event) }}" class="btn btn-warning">Editar</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $event->name }}</td>
+                <td>{{ $event->description }}</td>
+                <td>{{ $event->location }}</td>
+                <td>{{ $event->date }}</td>
+                <td>
+                    @if($event->image)
+                    <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->name }}" width="100">
+                    @else
+                    Sem imagem
+                    @endif
+                </td>
+                <td class="flex">
+                    <form action="{{ route('events.destroy', $event) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja deletar este evento?')">
+                            Deletar
+                        </button>
+                    </form>
+                    <a href="{{ route('events.edit', $event) }}" class="btn btn-warning">Editar</a>
+                </td>
+
+            </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+@endsection

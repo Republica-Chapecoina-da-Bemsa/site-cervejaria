@@ -12,8 +12,8 @@
 
 </head>
 
-<body style="background:#eee">
-    @include('nav')
+<body style="background:#ddd">
+    @include('navadm')
     <div class="container mt-5">
         @if ($errors->any())
         <div class="alert alert-danger">

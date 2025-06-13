@@ -1,5 +1,7 @@
-@extends ('base')
+@extends('baseadm')
+@section('titulo', 'Lista de Clientes')
 
+@section('conteudo')
 <div class="container">
     <h1 class="mt-4">Lista de Clientes</h1>
     <div class="container mb-2">
@@ -35,22 +37,26 @@
         </thead>
         <tbody>
             @foreach($clients as $client)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $client->name }}</td>
-                    <td>{{ $client->email }}</td>
-                    <td>{{ $client->phone }}</td>
-                    <td>{{ $client->address }}</td>
-                    <td>
-                        <form action="{{route("clients.destroy", $client)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Deletar</button>
-                        </form>
-                        <a href="{{route("clients.edit", $client)}}" class="btn btn-warning">Editar</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $client->name }}</td>
+                <td>{{ $client->email }}</td>
+                <td>{{ $client->phone }}</td>
+                <td>{{ $client->address }}</td>
+                <td class="flex">
+                    <form action="{{ route('clients.destroy', $client) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja deletar este cliente?')">
+                            Deletar
+                        </button>
+                    </form>
+                    <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">Editar</a>
+                </td>
+
+            </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+@endsection

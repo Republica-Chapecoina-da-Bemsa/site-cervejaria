@@ -1,5 +1,7 @@
-@extends('base')
+@extends('baseadm')
+@section('titulo', 'Lista de Produtos')
 
+@section('conteudo')
 <div class="container">
     <h1 class="mt-4">Lista de Produtos</h1>
 
@@ -33,29 +35,33 @@
         </thead>
         <tbody>
             @foreach($products as $product)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->description }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td>{{ $product->style->name }}</td>
-                    <td>
-                        @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
-                        @else
-                            Sem imagem
-                        @endif
-                    </td>
-                    <td>
-                        <form action="{{ route('products.destroy', $product->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Deletar</button>
-                        </form>
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Editar</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->description }}</td>
+                <td>{{ $product->price }}</td>
+                <td>{{ $product->style->name }}</td>
+                <td>
+                    @if($product->image)
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
+                    @else
+                    Sem imagem
+                    @endif
+                </td>
+                <td class="flex">
+                    <form action="{{ route('products.destroy', $product) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja deletar este producto?')">
+                            Deletar
+                        </button>
+                    </form>
+                    <a href="{{ route('products.edit', $product) }}" class="btn btn-warning">Editar</a>
+                </td>
+
+            </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+@endsection
