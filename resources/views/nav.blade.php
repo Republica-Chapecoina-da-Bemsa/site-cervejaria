@@ -21,11 +21,6 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link position-relative" href="{{ route('cart.view') }}">
-            <i class="bi bi-cart2 fs-4"></i>
-          </a>
-        </li>
       </ul>
     </div>
   </div>

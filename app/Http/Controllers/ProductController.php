@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Style;
 use Illuminate\Http\Request;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 class ProductController extends Controller
 {
     private function validateProduct(Request $request)
@@ -117,5 +117,16 @@ class ProductController extends Controller
             'products' => $products,
 
         ]);
+    }
+    public function report()
+    {
+        $product = Product::orderBy('name')->get();
+
+        $data = [
+            'product' => $product,
+        ];
+
+        $pdf = Pdf::loadView('products.report', $data);
+        return $pdf->download('relatorio_listagem_product.pdf');
     }
 }

@@ -52,25 +52,21 @@
         <thead>
             <tr>
                 <th>Produto</th>
-                <th>Preço Unitário</th>
-                <th>Quantidade</th>
-                <th>Subtotal</th>
+                <th>Estilo</th>
+                <th>Valor</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($items as $item)
+            @foreach($product as $item)
             <tr>
-                <td>{{ $item->product->name }}</td>
-                <td>R$ {{ number_format($item->product->price, 2, ',', '.') }}</td>
-                <td>{{ $item->quantity }}</td>
-                <td>R$ {{ number_format($item->product->price * $item->quantity, 2, ',', '.') }}</td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->style->name }}</td>
+                <td>{{ $item->price }}</td>
             </tr>
             @endforeach
-
         </tbody>
     </table>
 
-    <p class="total">Total: R$ {{ number_format($total, 2, ',', '.') }}</p>
 </body>
 
 </html>

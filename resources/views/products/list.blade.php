@@ -18,9 +18,10 @@
             </div>
 
             <a href="{{ route('products.create') }}" class="btn btn-success">Novo</a>
+            <a  class="btn btn-danger "href="{{route('products.report')}}">Relatório</a>
+
         </form>
     </div>
-
     <table class="table table-striped table-sm">
         <thead>
             <tr>

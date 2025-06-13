@@ -9,7 +9,6 @@ use App\Http\Controllers\StyleProductController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ClientStyleController;
 use App\Http\Controllers\ClientProductController;
-use App\Http\Controllers\CartController;
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::get('/estilos', [ClientStyleController::class, 'index'])->name('styles.list');
@@ -69,17 +68,6 @@ Route::prefix('products')->group(function () {
     Route::put('/edit/{product}/update', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/delete/{product}/', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::get('/search', [ProductController::class, 'search'])->name('products.search');
+    Route::get('generate/pdf', [ProductController::class, 'report'])->name('products.report');
 });
 
-Route::prefix('cart')->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('cart.index');
-    Route::get('/view', [CartController::class, 'view'])->name('cart.view');  // <-- new route here
-    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/update', [CartController::class, 'update'])->name('cart.update');
-    Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
-    Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
-});
-
-use App\Http\Controllers\PDFController;
-
-Route::post('/finalizar-pedido', [PDFController::class, 'finalize'])->name('pdf.finalize');
