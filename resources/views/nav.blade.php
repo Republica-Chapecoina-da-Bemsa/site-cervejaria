@@ -24,9 +24,6 @@
         <li class="nav-item">
           <a class="nav-link position-relative" href="{{ route('cart.view') }}">
             <i class="bi bi-cart2 fs-4"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
-              0
-            </span>
           </a>
         </li>
       </ul>
