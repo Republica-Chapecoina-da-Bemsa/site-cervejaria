@@ -79,3 +79,7 @@ Route::prefix('cart')->group(function () {
     Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
+
+use App\Http\Controllers\PDFController;
+
+Route::post('/finalizar-pedido', [PDFController::class, 'finalize'])->name('pdf.finalize');

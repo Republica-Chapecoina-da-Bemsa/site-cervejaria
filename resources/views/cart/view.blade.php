@@ -55,7 +55,13 @@
 
     <div class="d-flex gap-2">
         <a href="{{ route('home') }}" class="btn btn-secondary">Continuar Comprando</a>
-        <button type="button" class="btn btn-primary flex-grow-1">Finalizar Pedido</button>
+        <form action="{{ route('pdf.finalize') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-primary flex-grow-1">
+                Finalizar Pedido
+            </button>
+        </form>
+
     </div>
 </div>
 <script>
