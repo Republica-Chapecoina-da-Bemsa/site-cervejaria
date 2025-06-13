@@ -18,15 +18,6 @@ Route::get('/estilos/{style}', [ClientStyleController::class, 'show'])->name('st
 Route::get('/produtos', [ClientProductController::class, 'index'])->name('products.list');
 Route::get('/produtos/{products}', [ClientProductController::class, 'show'])->name('products.show');
 
-
-Route::prefix('cart')->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/update', [CartController::class, 'update'])->name('cart.update');
-    Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
-    Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
-});
-
 Route::get('/admin', function () {
     return view('index');
 })->name('admin.index');
@@ -78,4 +69,13 @@ Route::prefix('products')->group(function () {
     Route::put('/edit/{product}/update', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/delete/{product}/', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::get('/search', [ProductController::class, 'search'])->name('products.search');
+});
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/view', [CartController::class, 'view'])->name('cart.view');  // <-- new route here
+    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
 });

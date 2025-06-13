@@ -22,7 +22,7 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link position-relative" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+          <a class="nav-link position-relative" href="{{ route('cart.view') }}">
             <i class="bi bi-cart2 fs-4"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
               0

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -11,11 +12,11 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
         $total = 0;
-        
+
         foreach ($cart as $item) {
             $total += (float) $item['price'] * $item['quantity'];
         }
-        
+
         return response()->json([
             'cart' => $cart,
             'total' => $total,
@@ -27,7 +28,7 @@ class CartController extends Controller
     {
         $product = Product::findOrFail($request->product_id);
         $cart = session()->get('cart', []);
-        
+
         if (isset($cart[$product->id])) {
             $cart[$product->id]['quantity']++;
         } else {
@@ -39,9 +40,9 @@ class CartController extends Controller
                 'image' => $product->image
             ];
         }
-        
+
         session()->put('cart', $cart);
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Produto adicionado ao carrinho!',
@@ -52,17 +53,17 @@ class CartController extends Controller
     public function update(Request $request)
     {
         $cart = session()->get('cart', []);
-        
+
         if (isset($cart[$request->product_id])) {
             if ($request->quantity > 0) {
                 $cart[$request->product_id]['quantity'] = $request->quantity;
             } else {
                 unset($cart[$request->product_id]);
             }
-            
+
             session()->put('cart', $cart);
         }
-        
+
         return response()->json([
             'success' => true,
             'count' => count($cart)
@@ -72,12 +73,12 @@ class CartController extends Controller
     public function remove(Request $request)
     {
         $cart = session()->get('cart', []);
-        
+
         if (isset($cart[$request->product_id])) {
             unset($cart[$request->product_id]);
             session()->put('cart', $cart);
         }
-        
+
         return response()->json([
             'success' => true,
             'count' => count($cart)
@@ -87,10 +88,39 @@ class CartController extends Controller
     public function clear()
     {
         session()->forget('cart');
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Carrinho limpo!'
+        ]);
+    }
+    public function view()
+    {
+        $cart = Cart::with('items.product')->first();
+
+        if (!$cart) {
+            $cartItems = [];
+            $total = 0;
+        } else {
+            $cartItems = $cart->items->map(function ($item) {
+                return [
+                    'id' => $item->product->id,
+                    'name' => $item->product->name,
+                    'price' => (float) $item->product->price,
+                    'quantity' => $item->quantity,
+                    'image' => $item->product->image,
+                ];
+            })->toArray();
+
+            $total = collect($cartItems)->sum(function ($item) {
+                return $item['price'] * $item['quantity'];
+            });
+        }
+
+        return view('cart.view', [
+            'cart' => $cartItems,
+            'total' => $total,
+            'count' => count($cartItems),
         ]);
     }
 }
