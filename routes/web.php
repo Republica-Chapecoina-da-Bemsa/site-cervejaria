@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EventController;
@@ -71,3 +72,11 @@ Route::prefix('products')->group(function () {
     Route::get('generate/pdf', [ProductController::class, 'report'])->name('products.report');
 });
 
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::get('{product}/add', [CartController::class, 'add_item'])->name('cart.add');
+    Route::get('{product}/remove', [CartController::class, 'remove_item'])->name('cart.remove');
+    Route::get('/clear-cart', [CartController::class, 'clear_cart'])->name('cart.clear');
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+});
