@@ -16,4 +16,10 @@
             </tr>
             @endforeach
         </tbody>
+        <form method="POST" action="{{ route('cart.checkout') }}">
+
+            @csrf
+            <input type="text" name="paymentMethod">
+            <button type="submit">Submit</button>
+        </form>
     </table>
