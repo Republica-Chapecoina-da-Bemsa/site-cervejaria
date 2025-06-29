@@ -42,7 +42,13 @@
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->style->name }}</td>
-                        <td><a href="{{ route('cart.add', [$product]) }}">TESTE</a></td>
+                        <td>
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
+                            </form>
+                        </td>
                         <td>
                             @if($product->image)
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">

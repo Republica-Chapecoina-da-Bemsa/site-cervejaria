@@ -10,6 +10,7 @@ use App\Http\Controllers\StyleProductController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ClientStyleController;
 use App\Http\Controllers\ClientProductController;
+use App\Http\Controllers\ReciptController;
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::get('/estilos', [ClientStyleController::class, 'index'])->name('styles.list');
@@ -75,8 +76,10 @@ Route::prefix('products')->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
-    Route::get('{product}/add', [CartController::class, 'add_item'])->name('cart.add');
-    Route::get('{product}/remove', [CartController::class, 'remove_item'])->name('cart.remove');
-    Route::get('/clear-cart', [CartController::class, 'clear_cart'])->name('cart.clear');
-    Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('{product}/add', [CartController::class, 'add_item'])->name('cart.add');
+    Route::post('{product}/remove', [CartController::class, 'remove_item'])->name('cart.remove');
+    Route::post('/clear-cart', [CartController::class, 'clear_cart'])->name('cart.clear');
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
+Route::get('/recipts', [ReciptController::class, 'index'])->name('recipts.index');
+Route::get('/recipts/{recipt}/generate', [ReciptController::class, 'generateRecipt'])->name('recipts.generate');
