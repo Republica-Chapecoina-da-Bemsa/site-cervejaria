@@ -37,8 +37,20 @@
         </div>
 
         <div class="mb-3">
+            <label for="supplier_id" class="form-label">Fornecedor:</label>
+            <select name="supplier_id" id="supplier_id" class="form-select">
+                <option value="">-----</option>
+                @foreach ($suppliers as $supplier)
+                <option value="{{ $supplier->id }}" {{ (isset($product->supplier) && $product->supplier->id == $supplier->id) ? 'selected' : '' }}>
+                    {{ $supplier->name }}
+                </option>
+                @endforeach
+            </select>
+        </div>
+         <div class="mb-3">
             <label for="style_id" class="form-label">Estilo:</label>
             <select name="style_id" id="style_id" class="form-select">
+                <option value="">-----</option>
                 @foreach ($styles as $style)
                 <option value="{{ $style->id }}" {{ (isset($product->style) && $product->style->id == $style->id) ? 'selected' : '' }}>
                     {{ $style->name }}

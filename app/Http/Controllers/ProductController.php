@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Style;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 class ProductController extends Controller
@@ -33,6 +34,7 @@ class ProductController extends Controller
     {
         return view('products.form', [
             'styles' => Style::all(),
+            'suppliers' =>Supplier::all(),
 
         ]);
     }
@@ -69,6 +71,8 @@ class ProductController extends Controller
         return view('products.form', [
             'product' => $product,
             'styles' => Style::all(),
+            'suppliers' =>Supplier::all(),
+
         ]);
     }
 
