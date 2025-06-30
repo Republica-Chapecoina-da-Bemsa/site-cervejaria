@@ -20,7 +20,7 @@ Route::get('/produtos', [ClientProductController::class, 'index'])->name('produc
 Route::get('/produtos/{products}', [ClientProductController::class, 'show'])->name('products.show');
 
 Route::get('/admin', function () {
-    return view('index');
+    return view('dashboard');
 })->name('admin.index');
 
 Route::prefix('clients')->group(function () {
@@ -85,3 +85,6 @@ Route::prefix('cart')->group(function () {
 
 Route::get('/recipts', [ReciptController::class, 'index'])->name('recipts.index');
 Route::get('/recipts/{recipt}/generate', [ReciptController::class, 'generateRecipt'])->name('recipts.generate');
+
+Route::get('/recipts/items-sold-chart', [ReciptController::class, 'chart'])->name('recipts.items_sold_chart');
+Route::get('/events/chart-by-month', [EventController::class, 'showEventsChart'])->name('events.chart_by_month');

@@ -7,20 +7,23 @@
 
     <div class="container mb-2">
         <form action="{{ route('events.search') }}" method="get" class="d-flex align-items-center gap-1">
-            <select name="column" id="column" class="form-select" style="width: 200px;">
+            <select name="column" id="column" class="form-select" style="width: 150px;">
                 <option value="name">Nome</option>
                 <option value="location">Localização</option>
             </select>
 
-            <div class="input-group">
+            <div class="input-group" style="width: 850px;">
                 <input type="text" name="value" id="value" class="form-control" placeholder="Buscar">
                 <button type="submit" class="btn btn-primary">Buscar</button>
             </div>
 
             <a href="{{ route('events.create') }}" class="btn btn-success">Novo</a>
+
+            <a href="{{ route('events.chart_by_month') }}" class="btn btn-secondary">
+                <i class="bi bi-bar-chart"></i> Eventos por mês
+            </a>
         </form>
     </div>
-
     <table class="table table-striped table-sm">
         <thead>
             <tr>

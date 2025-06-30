@@ -21,6 +21,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('clients.index') }}">Clientes</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('recipts.index') }}">Recibos</a>
+        </li>
       </ul>
     </div>
   </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Charts\EventsByDateChart;
 
 class EventController extends Controller
 {
@@ -93,7 +94,7 @@ class EventController extends Controller
         if ($event->image) {
             $imagePath = public_path('storage/' . $event->image);
             if (file_exists($imagePath)) {
-                unlink($imagePath); // Delete the image file
+                unlink($imagePath); 
             }
         }
         $event->delete();
@@ -112,5 +113,9 @@ class EventController extends Controller
             'events' => $events,
 
         ]);
+    }
+    public function showEventsChart(EventsByDateChart $chart)
+    {
+        return view('events.chart', ['chart' => $chart->build()]);
     }
 }

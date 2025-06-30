@@ -1,21 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Receipt Report</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; margin: 0; padding: 20px; }
-        .report-container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 32px; }
-        .header { text-align: center; margin-bottom: 32px; }
-        .header h2 { margin: 0; color: #2c3e50; }
-        .info-table, .items-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
-        .info-table td { padding: 6px 0; }
-        .items-table th, .items-table td { border: 1px solid #dee2e6; padding: 8px; text-align: left; }
-        .items-table th { background: #f1f3f5; }
-        .total-row td { font-weight: bold; }
-        .footer { text-align: center; color: #888; font-size: 13px; margin-top: 32px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .report-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header h2 {
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .info-table,
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+
+        .info-table td {
+            padding: 6px 0;
+        }
+
+        .items-table th,
+        .items-table td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .items-table th {
+            background: #f1f3f5;
+        }
+
+        .total-row td {
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-top: 32px;
+        }
     </style>
 </head>
+
 <body>
     <div class="report-container">
         <div class="header">
@@ -50,7 +100,7 @@
             </thead>
             <tbody>
                 @php
-                    $products = is_string($receipt->products ?? '') ? json_decode($receipt->products) : ($receipt->products ?? []);
+                $products = is_string($receipt->products ?? '') ? json_decode($receipt->products) : ($receipt->products ?? []);
                 @endphp
                 @forelse($products as $i => $product)
                 <tr>
@@ -77,4 +127,5 @@
         </div>
     </div>
 </body>
+
 </html>

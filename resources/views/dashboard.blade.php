@@ -56,6 +56,16 @@
                     </div>
                 </div>
             </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 text-center p-3">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div class="mb-4">
+                            <h5 class="card-title fw-bold">Recibos</h5>
+                        </div>
+                        <a href="{{ route('recipts.index') }}" class="btn btn-outline-warning mt-auto">Ver Recibos</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
