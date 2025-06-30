@@ -7,15 +7,16 @@
 
     <div class="container mb-2">
         <form action="{{ route('styles.search') }}" method="get" class="d-flex align-items-center gap-1">
+            <select name="column" id="column" class="form-select" style="width: 200px;">
+                <option value="name">Nome</option>
+                <option value="description">Descrição</option>
+            </select>
+
             <div class="input-group">
                 <input type="text" name="value" id="value" class="form-control" placeholder="Buscar">
                 <button type="submit" class="btn btn-primary">Buscar</button>
             </div>
 
-            <select name="column" id="column" class="form-select" style="width: 200px;">
-                <option value="name">Nome</option>
-                <option value="description">Descrição</option>
-            </select>
 
             <a href="{{ route('styles.create') }}" class="btn btn-success">Novo</a>
         </form>

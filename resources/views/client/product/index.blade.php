@@ -37,9 +37,13 @@
                     <p class="product-description">{{ \Illuminate\Support\Str::limit($product->description, 80) }}</p>
                     <div class="product-footer d-flex justify-content-between align-items-center">
                         <span class="product-price">R$ {{ number_format($product->price, 2, ',', '.') }}</span>
-                        <button class="btn btn-sm btn-primary add-to-cart" data-product-id="{{ $product->id }}">
-                            <i class="bi bi-cart-plus"></i>
-                        </button>
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="quantity" value="1">
+                            <button class="btn btn-sm btn-primary add-to-cart" data-product-id="{{ $product->id }}">
+                                <i class="bi bi-cart-plus"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -19,60 +19,81 @@ class CartController extends Controller
             "cart" => $cart,
         ]);
     }
+
     public function add_item(Product $product, Request $request)
     {
-        Cart::create([
-            "product_id" => $product->id,
-            "quantity" => $request->input('quantity'),
-        ]);
-         return redirect()->route("cart.index")->with("success", "Item added successfully.");
+        // Verifica se o item já existe no carrinho
+        $cartItem = Cart::where("product_id", $product->id)->first();
 
+        if ($cartItem) {
+            // Se existir, atualiza a quantidade
+            $cartItem->quantity += $request->input('quantity', 1); // Adiciona 1 se a quantidade não for especificada
+            $cartItem->save();
+        } else {
+            // Se não existir, cria um novo item no carrinho
+            Cart::create([
+                "product_id" => $product->id,
+                "quantity" => $request->input('quantity', 1), // Adiciona 1 se a quantidade não for especificada
+            ]);
+        }
+
+        return redirect()->route("cart.index")->with("success", "Item adicionado/atualizado no carrinho com sucesso.");
     }
+
     public function remove_item(Product $product, Request $request)
     {
         $item = Cart::where("product_id", $product->id)->first();
         if ($item) {
             $item->delete();
+            return redirect()->route("cart.index")->with("success", "Item removido com sucesso.");
         }
-         return redirect()->route("cart.index")->with("success", "Item removed successfully.");
-
+        return redirect()->route("cart.index")->with("error", "Item não encontrado no carrinho.");
     }
+
     public function update_item(Product $product, Request $request)
     {
         $item = Cart::where("product_id", $product->id)->first();
         if ($item) {
             $item->update([
-                "quantity" => $request->input("quantity", 1),
+                "quantity" => $request->input("quantity"), // Não precisa de default 1 aqui, pois o input já tem min="1"
             ]);
+            return redirect()->route("cart.index")->with("success", "Quantidade atualizada com sucesso.");
         }
+        return redirect()->route("cart.index")->with("error", "Item não encontrado no carrinho para atualização.");
     }
+
     public function clear_cart()
     {
         Cart::truncate();
-        return redirect()->route("cart.index")->with("success", "Cart cleared successfully.");
+        return redirect()->route("cart.index")->with("success", "Carrinho limpo com sucesso.");
     }
+
     public function checkout(Request $request)
     {
         if (Cart::count() == 0) {
-            return redirect()->route("cart.index")->with("error", "Your cart is empty.");
+            return redirect()->route("cart.index")->with("error", "Seu carrinho está vazio.");
         }
+
         $paymentMethod = $request->input('paymentMethod');
         $cartItems = Cart::with('product')->get();
         $total = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
-        Recipt::create([
+
+        $recipt = Recipt::create([
             'total_amount' => $total,
             'payment_method' => $paymentMethod,
             'status' => 'completed',
             'products' => json_encode($cartItems->map(function ($item) {
-            return [
-                'name' => $item->product->name,
-                'quantity' => $item->quantity,
-                'price' => $item->product->price,
-            ];
+                return [
+                    'name' => $item->product->name,
+                    'quantity' => $item->quantity,
+                    'price' => $item->product->price,
+                ];
             })->toArray()),
         ]);
-        Cart::truncate();
-        return redirect()->route("cart.index")->with("success", "Checkout successful.");
-    }
 
+        Cart::truncate();
+
+        return redirect()->route("recipts.generate", ['recipt' => $recipt->id])
+            ->with("success", "Compra finalizada com sucesso! Seu recibo foi gerado.");
+    }
 }

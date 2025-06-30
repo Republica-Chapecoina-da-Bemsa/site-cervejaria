@@ -21,6 +21,11 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="btn btn-outline-primary" href="{{ route('cart.index') }}">
+            <i class="bi bi-cart"></i> Carrinho
+          </a>
+        </li>
       </ul>
     </div>
   </div>

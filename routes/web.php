@@ -77,9 +77,11 @@ Route::prefix('products')->group(function () {
 Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
     Route::post('{product}/add', [CartController::class, 'add_item'])->name('cart.add');
-    Route::post('{product}/remove', [CartController::class, 'remove_item'])->name('cart.remove');
-    Route::post('/clear-cart', [CartController::class, 'clear_cart'])->name('cart.clear');
+    Route::put('{product}/update', [CartController::class, 'update_item'])->name('cart.update_item');
+    Route::delete('{product}/remove', [CartController::class, 'remove_item'])->name('cart.remove');
+    Route::delete('/clear-cart', [CartController::class, 'clear_cart'])->name('cart.clear');
     Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
+
 Route::get('/recipts', [ReciptController::class, 'index'])->name('recipts.index');
 Route::get('/recipts/{recipt}/generate', [ReciptController::class, 'generateRecipt'])->name('recipts.generate');

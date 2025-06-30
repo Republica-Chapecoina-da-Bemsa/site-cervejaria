@@ -37,12 +37,15 @@
                         <div class="product-details mt-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="product-price">R$ {{ number_format($product->price, 2, ',', '.') }}</span>
-                                @if($product->ABV)
-                                <span class="badge bg-secondary">{{ $product->ABV }}% ABV</span>
-                                @endif
-                                <button class="btn btn-primary add-to-cart" data-product-id="{{ $product->id }}">
-                                    <i class="bi bi-cart-plus"></i>
-                                </button>
+
+                                <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button class="btn btn-sm btn-primary add-to-cart" data-product-id="{{ $product->id }}">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
                     </div>

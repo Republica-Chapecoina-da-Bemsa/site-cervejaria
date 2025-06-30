@@ -29,6 +29,7 @@
                 <th>Descrição</th>
                 <th>Preço</th>
                 <th>Estilo</th>
+                <th>Adicionar</th>
                 <th>Imagem</th>
                 <th>Ações</th>
             </tr>
