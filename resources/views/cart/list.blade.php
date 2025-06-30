@@ -82,7 +82,12 @@
             @csrf
             <div class="form-group">
                 <label for="paymentMethod">Método de Pagamento:</label>
-                <input type="text" name="paymentMethod" id="paymentMethod" class="form-control" placeholder="Ex: Cartão de Crédito, Pix, Boleto" required>
+                <select name="paymentMethod" id="paymentMethod" class="form-control" required>
+                    <option value="" disabled selected>Selecione o método de pagamento</option>
+                    <option value="cartao">Cartão de Crédito</option>
+                    <option value="pix">Pix</option>
+                    <option value="boleto">Boleto</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-success w-25">Finalizar Compra</button>
         </form>
