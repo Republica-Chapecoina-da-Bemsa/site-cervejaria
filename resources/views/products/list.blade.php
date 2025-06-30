@@ -30,7 +30,6 @@
                 <th>Descrição</th>
                 <th>Preço</th>
                 <th>Estilo</th>
-                <th>Adicionar</th>
                 <th>Imagem</th>
                 <th>Ações</th>
             </tr>
@@ -44,20 +43,13 @@
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->style->name }}</td>
                 <td>
-                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="quantity" value="1">
-                        <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
-                    </form>
-                </td>
-                <td>
                     @if($product->image)
                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
                     @else
                     Sem imagem
                     @endif
                 </td>
-                <td class="flex">
+                <td class="=d-flex gap-1">
                     <form action="{{ route('products.destroy', $product) }}" method="POST">
                         @csrf
                         @method('DELETE')

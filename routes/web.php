@@ -11,6 +11,7 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ClientStyleController;
 use App\Http\Controllers\ClientProductController;
 use App\Http\Controllers\ReciptController;
+use App\Http\Controllers\SupplierController;
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::get('/estilos', [ClientStyleController::class, 'index'])->name('styles.list');
@@ -43,6 +44,15 @@ Route::prefix('events')->group(function () {
     Route::get('/search', [EventController::class, 'search'])->name('events.search');
 });
 
+Route::prefix('suppliers')->group(function () {
+    Route::get('/', [SupplierController::class, 'index'])->name('suppliers.index');
+    Route::get('/create', [SupplierController::class, 'create'])->name('suppliers.create');
+    Route::post('/create/store', [SupplierController::class, 'store'])->name('suppliers.store');
+    Route::get('/edit/{supplier}', [SupplierController::class, 'edit'])->name('suppliers.edit');
+    Route::put('/edit/{supplier}/update', [SupplierController::class, 'update'])->name('suppliers.update');
+    Route::delete('/delete/{supplier}/', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
+    Route::get('/search', [SupplierController::class, 'search'])->name('suppliers.search');
+});
 Route::prefix('styles')->group(function () {
     Route::get('/', [StyleController::class, 'index'])->name('styles.index');
     Route::get('/create', [StyleController::class, 'create'])->name('styles.create');

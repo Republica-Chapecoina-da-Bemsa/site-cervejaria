@@ -24,6 +24,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('recipts.index') }}">Recibos</a>
         </li>
+           <li class="nav-item">
+          <a class="nav-link" href="{{ route('suppliers.index') }}">Fornecedores</a>
+        </li>
       </ul>
     </div>
   </div>
